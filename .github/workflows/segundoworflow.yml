@@ -1,0 +1,30 @@
+name: Segundo workflow
+on:
+  push:
+    branches: [main]
+jobs:
+  construccion:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write #Permiso de escritura para que pueda el runner hacer commit
+    steps:
+      - name: primer step --> checkout
+        uses: actions/checkout@v7
+      - name: segundo step --> setup node
+        uses: actions/setup-node@v7
+        with:   
+          node-version: '22'
+      
+      - name: tercer step --> Instalar dependencias
+        run: npm ci
+      - name: cuarto step --> Lanzar pruebas
+        run: npm test # Lo configurado en package.json
+      
+      - name: quinto step --> auto commit   #Si la maquina virtual realizase algun cambio que no haya hecho yo saldra el autocommit
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: 'Auto commit (Mi mensaje personalizado)'
+          commit_user_name: 'Samuel (Github Actions)'
+          commit_user_email: 'samfcb89@gmail.com'
+          commit_author: 'Author: Samuel'
+          

@@ -1,0 +1,16 @@
+{
+  "name": "CI/CD Prueba 1",
+  "version": "1.0.0",
+  "description": "Pruebas de GitHub Actions",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Simulando tests pasados correctamente\""
+  },
+  "author": "samuel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.24.2"
+  }
+}
