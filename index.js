@@ -9,11 +9,11 @@ const SALUDO = process.env.SALUDO || '¡Hola desde Node.js dentro de docker!🐋
 async function conectar() { 
 try {
   const conexion = await mysql.createConnection({
-    host: 'mi-mysql', //Entre contenedores
-    user: 'root',
-    password: 'admin',
-    database: 'miBBDD',
-    port: '3306' //Entre contenedores
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT 
   });
   console.log('Conexión exitosa a MySQL ✅');
   return conexion;
