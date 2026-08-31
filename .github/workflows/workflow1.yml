@@ -25,7 +25,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - run: echo "VERSION_JAVA=$(java --version)" >> $GITHUB_ENV
+      #Cuando te devuelven varias lineas, falla y se controla con esta funcion
+      - run: echo "VERSION_JAVA=$(java -version 2>&1 | head -n 1)" >> $GITHUB_ENV  
 
       - run: echo "La version de java es $VERSION_JAVA"
 
@@ -45,8 +46,9 @@ jobs:
           echo "El puerto elegido es $PUERTO_CUSTOM"
 
       - name: Guardar version maven
+        #Cuando te devuelven varias lineas, falla y se controla con esta funcion
         run: |
-          echo "VERSION_MAVEN=$(mvn --version)" >> $GITHUB_ENV
+          echo "VERSION_MAVEN=$(mvn --version | head -n 1)" >> $GITHUB_ENV
 
       - name: Mostrar version maven
         run: echo "$VERSION_MAVEN"
