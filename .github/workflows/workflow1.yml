@@ -10,7 +10,7 @@ jobs:
           - name: 1. Descargar mi código
             uses: actions/checkout@v7
 
-          - run: echo 'Esta es una linea con variables $GITHUB_ACTOR 😊'
+          - run: echo "Esta es una linea con variables $GITHUB_ACTOR 😊"
 
           - run: echo 'Repositorio de ${{github.repository}} 👌. El trabajo actual esta ${{job.status}}'
 
@@ -22,7 +22,7 @@ jobs:
             uses: actions/setup-java@v6
 
           - run: echo 'VERSION_JAVA=$(java --version)' >> $GITHUB_ENV
-          - run: echo 'La version de java es $VERSION_JAVA'
+          - run: echo "La version de java es $VERSION_JAVA"
 
 
           - name : Crear variables locales
@@ -44,7 +44,7 @@ jobs:
                  echo "VERSION_MAVEN=$(mvn --version)" >> $GITHUB_ENV
 
           - name: Mostrar version maven
-            run: echo $VERSION_MAVEN
+            run: echo "$VERSION_MAVEN"
             
           
 
