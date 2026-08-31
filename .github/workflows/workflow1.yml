@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: 1. Descargar mi código
-            uses: actions/checkout@v4
+            uses: actions/checkout@v7
 
           - run: echo 'Esta es una linea con variables $GITHUB_ACTOR 😊'
 
@@ -18,7 +18,12 @@ jobs:
                  echo 'Este es el evento activado en el workflow ${{github.event_name}} '
                  echo 'en la ruta absoluta de ${{github.workspace}}. El runner tiene un SO ${{runner.os}} con una arquitectura ${{runner.arch}}'
 
-          - uses: actions/setup-java@v4
+          - name: Realizando setup de java
+            uses: actions/setup-java@v6
+
+          - run: echo 'VERSION_JAVA=$(java --version)' >> $GITHUB_ENV
+          - run: echo 'La version de java es $VERSION_JAVA'
+
 
           - name : Crear variables locales
             run: |
