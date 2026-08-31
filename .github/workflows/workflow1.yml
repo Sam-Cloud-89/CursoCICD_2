@@ -20,6 +20,9 @@ jobs:
 
           - name: Realizando setup de java
             uses: actions/setup-java@v6
+            with:
+              java-version: '21'        
+              distribution: 'temurin'  
 
           - run: echo 'VERSION_JAVA=$(java --version)' >> $GITHUB_ENV
           - run: echo "La version de java es $VERSION_JAVA"
