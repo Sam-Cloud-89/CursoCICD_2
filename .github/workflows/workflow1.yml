@@ -24,13 +24,13 @@ jobs:
               java-version: '21'        
               distribution: 'temurin'  
 
-          - run: echo 'VERSION_JAVA=$(java --version)' >> $GITHUB_ENV
+          - run: echo "VERSION_JAVA=$(java --version)" >> $GITHUB_ENV
           - run: echo "La version de java es $VERSION_JAVA"
 
 
           - name : Crear variables locales
             run: |
-                MI_NOMBRE= "Samuel"
+                MI_NOMBRE="Samuel"
                 echo "Hola $MI_NOMBRE"
             
           - name: Crear variables para variables de entorno de github
