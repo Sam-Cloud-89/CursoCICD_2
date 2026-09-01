@@ -1,0 +1,55 @@
+name: miTercerWorkflow
+on:
+  push:
+    branches: main
+jobs:
+  primerCurro:
+    runs-on: ubuntu-latest
+    services:
+      mySqlService:
+        image: mysql:26.7
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE:  ${{ secrets.DB_NAME }}
+        ports:
+          - 3306:3306
+
+        # VOLÚMENES / MONTAJES (Opcional)
+        # Formato: ["ruta_host:ruta_contenedor"]
+        volumes:
+          - datos_mysql:/var/lib/mysql  
+          - ${{ github.workspace }}/scripts:/docker-entrypoint-initdb.d
+        # Espera a que MySQL esté totalmente listo antes de pasar al primer step
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3 
+    steps:
+      - uses: actions/checkout@v4
+
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Iniciar servidor en segundo plano
+        run: node index.js &
+        env:
+          #El bloque env: del archivo YAML es el puente/conector directo con el process.env de tu código de JavaScript.Los nombres pueden ser el que eligas como si pones DB_MIBASEDEDATOS...
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PORT: 3306
+
+      - name: Esperar a que el servidor Express levante
+        run: sleep 2
+
+      - name: Llamar al endpoint /conectar
+      # --fail hace que si el endpoint devuelve un error (500), el step falle en GitHub
+        run: curl --fail http://127.0.0.1:3000/conectar
