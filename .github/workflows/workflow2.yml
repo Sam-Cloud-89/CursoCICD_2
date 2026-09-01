@@ -1,4 +1,4 @@
-name: miTercerWorkflow
+name: Ejemplo workflow2
 on:
   push:
     branches: main
